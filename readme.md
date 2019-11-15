@@ -1,4 +1,4 @@
-# Dockerized Spark
+# Containerized Spark
 
 This is a `docker-compose` setup for bootstrapping a spark-cluster in standalone mode.
 
