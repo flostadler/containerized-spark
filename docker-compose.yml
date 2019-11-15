@@ -1,0 +1,28 @@
+version: '2'
+services:
+  spark-master:
+    image: bde2020/spark-master:${SPARK_VERSION}-hadoop2.7
+    hostname: "spark-master"
+    ports:
+      - "8080"
+    expose:
+      - "8080"
+      - "7077"
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+  spark-worker:
+    image: bde2020/spark-worker:${SPARK_VERSION}-hadoop2.7
+    depends_on:
+      - spark-master
+    expose:
+      - "8081"
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+  reverse:
+    image: nginx
+    ports:
+      - "80"
+    expose:
+      - "80"
+    volumes:
+      - ./config:/etc/nginx
